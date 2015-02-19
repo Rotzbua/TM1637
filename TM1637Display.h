@@ -17,6 +17,7 @@
 #ifndef __TM1637DISPLAY__
 #define __TM1637DISPLAY__
 
+#include "Arduino.h"
 #include <inttypes.h>
 
 #define SEG_A   0b00000001
@@ -83,7 +84,20 @@ public:
   //! @return A code representing the 7 segment image of the digit (LSB - segment A;
   //!         bit 6 - segment G; bit 7 - always zero)
   uint8_t encodeDigit(uint8_t digit);
-
+  
+  // new functions by racu
+  //
+  //! display float
+  void showNumber(float number, int decPlaces = 1);
+  //! display text
+  void showText(char* text);
+  //! display text
+  void showText(String text);
+  //! is character corresponding to special segment on display
+  boolean isSpecialSegmentCharacter(char c);
+  //! convert character to segment
+  uint8_t charToSegment(char c);
+  
 protected:
    void bitDelay();
    
