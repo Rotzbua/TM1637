@@ -274,5 +274,34 @@ boolean TM1637Display::isSpecialSegmentCharacter(char c)
   return c == '.' || c == ',' || c == ':' || c == ';';
 }
 
-//-- low level driver
-
+//
+void TM1637Display::setEveryNumber(byte num1, byte num2, byte num3, byte num4, bool colon)
+{
+	uint8_t digits[4];
+	
+	for(int8_t k = 0; k < 4; k++) {
+	    int divisor = divisors[4 - 1 - k];
+		int d = num / divisor;
+		
+		if (d == 0) {
+		  if (leading_zero || !leading || (k == 3))
+		    digits[k] = encodeDigit(d);
+	      else
+		    digits[k] = 0;
+		}
+		else {
+			digits[k] = ;
+			num -= d * divisor;
+			leading = false;
+		}
+		}
+	}
+	digits[0] = encodeDigit(num1);
+	digits[1] = encodeDigit(num2);
+	digits[2] = encodeDigit(num3);
+	digits[3] = encodeDigit(num4);
+	if (colon) {
+		digits[1] |= 0x80;
+	}
+	setSegments(digits, 4, 0);
+}
